@@ -4,6 +4,7 @@ import {Dimensions, FlatList, Text} from "react-native";
 import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import {CenterView} from "@/systems/components/centerView";
 import {AbsoluteView} from "@/systems/components/absoluteView";
+import {Debounce} from "@/systems/util/debounce";
 
 const windowWidth = Dimensions.get('window').width
 // 아이템 요소 더미 데이터
@@ -14,14 +15,17 @@ const items: React.ReactNode[] = [
     'https://picsum.photos/1200/600?random=4'
 ]
 
+// TODO:: 추후 외부 CSS로
 const TitleText = styled.Text `
     color: white;
     font-size: 33px;
     font-weight: bold;
 `
-
-
-// TODO:: 추후 외부 CSS로
+const SmallText = styled.Text `
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+`
 const Container = styled(GestureHandlerRootView) `
     aspect-ratio: 16/4;
     cursor: grab;
@@ -32,6 +36,14 @@ const FlatContainer = styled.FlatList `
     width:100%;
     height: 100%;
 `
+
+const Layer = styled.View `
+    padding: 2px 6px;
+    border-radius: 20px;
+    background-color: #11111180;
+    color: white;
+`
+
 export const Banner = () => {
     const flatListRef = useRef<FlatList>(null);
     const [isDrag, setIsDrag] = useState(false);
@@ -66,6 +78,13 @@ export const Banner = () => {
         setIsDrag(false);
     }
 
+    // 디바운스
+    const debouncedUpdate = useRef(
+        Debounce((currentScrollX: number) => {
+            setCurrentIndex(Math.round(currentScrollX / windowWidth))
+        }, 100)
+    ).current;
+
     return (
         <>
             <Container
@@ -74,15 +93,17 @@ export const Banner = () => {
                 onPointerMove={pointerMoveEvent}
             >
                 {/*현재*/}
-                <AbsoluteView>
-                    <Text>123123</Text>
+                <AbsoluteView left={20} top={20}>
+                    <Layer>
+                        <SmallText>{currentIndex + 1} / {items.length}</SmallText>
+                    </Layer>
                 </AbsoluteView>
                 <FlatContainer
                     ref={flatListRef}
                     showsVerticalScrollIndicator={false}
                     onScroll={e => {
                         scrollOffsetX.current = e.nativeEvent.contentOffset.x;
-                        console.log(scrollOffsetX.current)
+                        debouncedUpdate(e.nativeEvent.contentOffset.x)
                     }}
                     getItemLayout={(_, index) =>({
                         length: windowWidth,

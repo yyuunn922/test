@@ -1,12 +1,12 @@
 import styled from "@emotion/native";
 
-type Position = {
+export type AbsoluteViewType = {
     top: number,
     bottom: number,
     right: number,
     left: number,
 }
-export const AbsoluteView = styled.View<Partial<Position>> `
+export const AbsoluteView = styled.View<Partial<AbsoluteViewType>> `
     top: ${(props) => props.top ? `${`${props.top}`}` : null};
     bottom: ${(props) => props.bottom ? `${`${props.bottom}`}` : null};
     left: ${(props) => props.left ? `${`${props.left}`}` : null};

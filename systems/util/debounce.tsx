@@ -1,4 +1,4 @@
-const Debounce = (callback: Function, delay: number) => {
+export const Debounce = (callback: Function, delay: number) => {
     let timeoutId: NodeJS.Timeout;
 
     return (...args: any[]) => {
