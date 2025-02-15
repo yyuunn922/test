@@ -1,9 +1,9 @@
-import React, {FC, ReactNode, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import styled from '@emotion/native'
-import {Dimensions, FlatList, Text, View, ViewProps} from "react-native";
+import {Dimensions, FlatList, Text} from "react-native";
 import {GestureHandlerRootView} from 'react-native-gesture-handler'
-import {number} from "prop-types";
-import {topBoolOrEmptySchema} from "ajv/lib/compile/validate/boolSchema";
+import {CenterView} from "@/systems/components/centerView";
+import {AbsoluteView} from "@/systems/components/absoluteView";
 
 const windowWidth = Dimensions.get('window').width
 // 아이템 요소 더미 데이터
@@ -13,22 +13,6 @@ const items: React.ReactNode[] = [
     'https://picsum.photos/1200/600?random=3',
     'https://picsum.photos/1200/600?random=4'
 ]
-
-// TODO:: 공통 CSS 분리
-type Position = {
-    top: number,
-    bottom: number,
-    right: number,
-    left: number,
-}
-const AbsoluteVIew = styled.View<Partial<Position>> `
-    top: ${(props) => props.top ? `${`${props.top}`}` : null};
-    bottom: ${(props) => props.bottom ? `${`${props.bottom}`}` : null};
-    left: ${(props) => props.left ? `${`${props.left}`}` : null};
-    right: ${(props) => props.right ? `${`${props.right}`}` : null};
-    position: absolute;
-    z-index: 3;
-`
 
 const TitleText = styled.Text `
     color: white;
@@ -54,13 +38,17 @@ export const Banner = () => {
     const scrollOffsetX = useRef(0);
     const startOffsetX = useRef(0);
     const scrollStartOffset = useRef(0); // 마우스 클릭 시점의 스크롤 위치
+    const [currentIndex, setCurrentIndex] = useState(1);
 
+
+    // 마우스 클릭시
     const pointerDownEvent = (e: any) => {
         setIsDrag(true);
         startOffsetX.current = e.nativeEvent.pageX; // 클릭한 순간 X 좌표
         scrollStartOffset.current = scrollOffsetX.current; // 현재 스크롤 위치 저장
     };
 
+    // 마우스 무브시
     const pointerMoveEvent = (e: any) => {
         if (isDrag && flatListRef.current) {
             const deltaX = startOffsetX.current - e.nativeEvent.pageX; // 마우스 이동 거리
@@ -73,6 +61,7 @@ export const Banner = () => {
         }
     };
 
+    // 마우스 땠음
     const pointerUpEvent = () => {
         setIsDrag(false);
     }
@@ -84,14 +73,16 @@ export const Banner = () => {
                 onPointerUp={pointerUpEvent}
                 onPointerMove={pointerMoveEvent}
             >
-                <AbsoluteVIew>
+                {/*현재*/}
+                <AbsoluteView>
                     <Text>123123</Text>
-                </AbsoluteVIew>
+                </AbsoluteView>
                 <FlatContainer
                     ref={flatListRef}
                     showsVerticalScrollIndicator={false}
                     onScroll={e => {
                         scrollOffsetX.current = e.nativeEvent.contentOffset.x;
+                        console.log(scrollOffsetX.current)
                     }}
                     getItemLayout={(_, index) =>({
                         length: windowWidth,
@@ -102,7 +93,7 @@ export const Banner = () => {
                     pagingEnabled={true}
                     horizontal={true}
                     data={items}
-                    renderItem={({ item }: { item: any }) => <Item url={item} />}
+                    renderItem={({ item }: { item: any }) => <BannerItem url={item} />}
                 />
             </Container>
         </>
@@ -128,36 +119,14 @@ const Filter = styled.View `
     z-index: 1;
 `
 
-const Item = ({url} : {url: string}) => {
+const BannerItem = ({url} : {url: string}) => {
     return <ImageContainer>
         <Filter />
-        <Center>
+        <CenterView>
             <TitleText>Lorem ipsum dolor sit amet.</TitleText>
-        </Center>
+        </CenterView>
         <ImageItem source={{uri: url}}/>
     </ImageContainer>
 }
 
 
-// Transform, late 불가능으로 구현
-const CenterContainer = styled.View<{width: number, height: number}> `
-    position: absolute;
-    left: 50%;
-    bottom: 50%;
-    ${({ width, height }) => `
-        margin-left: -${width / 2}px;
-        margin-top: -${height / 2}px;
-    `}
-    z-index: 2;
-`
-const Center: FC<ViewProps> = ({children, ...props}) => {
-    const viewRef = useRef<View>(null);
-    const [size, setSize] = useState({width: 0, height: 0});
-    return (
-        <CenterContainer width={size.width} height={size.width} ref={viewRef} {...props} onLayout={e => {
-            setSize({width: e.nativeEvent.layout.width, height: e.nativeEvent.layout.height})
-        }}>
-            {children}
-        </CenterContainer>
-    )
-}
