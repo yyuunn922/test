@@ -21,6 +21,7 @@ import {
 import {CenterView} from "@/systems/components/centerView";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
 
+// 기본 데이터를 정의합니다.
 const items: React.ReactNode[] = [
     'https://picsum.photos/1200/600?random=1',
     'https://picsum.photos/1200/600?random=2',
@@ -28,6 +29,7 @@ const items: React.ReactNode[] = [
     'https://picsum.photos/1200/600?random=4',
 ];
 
+// 컴포넌트 시작
 export const Banner = () => {
     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
     const flatListRef = useRef<FlatList>(null);
@@ -59,7 +61,7 @@ export const Banner = () => {
         }
     }, [rollingState]);
 
-    // 초기화
+    // 렌더링시 초기화
     useEffect(() => {
         // 롤링 자동 시작
          setRollingState(true)
