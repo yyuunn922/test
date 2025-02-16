@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Dimensions, FlatList, TouchableOpacity, useWindowDimensions} from 'react-native';
+import {FlatList, TouchableOpacity, useWindowDimensions} from 'react-native';
 import {AbsoluteView} from '@/systems/components/absoluteView';
 import {AntDesign} from '@expo/vector-icons';
 import {LineCenter} from '@/systems/components/lineCenter';
@@ -39,6 +39,7 @@ export const Banner = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [rollingState, setRollingState] = useState(false);
     const rollingIntervalRef = useRef<NodeJS.Timeout | null>(null);
+    const stopRef = useRef(false);
 
     // 롤링 상태가 변경되면
     useEffect(() => {
@@ -64,9 +65,14 @@ export const Banner = () => {
     useEffect(() => {
         setRollingState(false);
         setInterval(() => {
-            setRollingState(true);
-        }, 300)
+            if (stopRef.current) {
+                setRollingState(true);
+            } else {
+                stopRef.current = false;
+            }
+        }, 1000)
     }, [windowWidth]);
+
 
     // 렌더링시 초기화
     useEffect(() => setRollingState(true), []);

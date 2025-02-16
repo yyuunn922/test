@@ -4,7 +4,7 @@ import {Animated} from "react-native";
 export const Container = styled.View<{width: number}> `
     width: ${({ width }) => (width === 0 ? '100%' : `${width}px`)};
     border: ${({ width }) => (width !== 0 && `1px solid #ddd`)};
-    box-shadow: 1px 1px 1px #ddd;
+    box-shadow: ${({ width }) => (width !== 0 && `1px 1px 1px #ddd`)};
     padding: 4px 20px;
     border-radius: 4px;
     display: flex;

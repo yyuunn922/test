@@ -17,6 +17,9 @@ export default function Index() {
                     <TitleTextB>햄버거 메뉴</TitleTextB>
                     <HambugerMenu />
                 </TopView>
+                <TopView value={30}>
+                    <TitleTextB>디자인 슬라이드</TitleTextB>
+                </TopView>
             </ScrollView>
         </>
     );
