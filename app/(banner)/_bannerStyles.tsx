@@ -1,29 +1,28 @@
 import styled from '@emotion/native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {ImageProps, useWindowDimensions} from "react-native";
+import {FC} from "react";
 
-export const TitleText = styled.Text`
-    color: white;
-    font-size: 33px;
-    font-weight: bold;
-`;
+const mobileRatio = "16 / 10"
+const defaultRatio = "16 / 4"
+const wideRatio = "16 / 3"
 
-export const TitleTextB = styled.Text`
-    padding: 10px;
-    color: black;
-    font-size: 33px;
-    font-weight: bold;
-`;
-
-export const SmallText = styled.Text`
-    color: white;
-    font-size: 12px;
-    font-weight: bold;
-`;
-
-export const Container = styled(GestureHandlerRootView)`
-    aspect-ratio: 16/4;
+// TODO:: 추후 컴포넌트와 스타일 분리 필요
+const ContainerBase = styled(GestureHandlerRootView)<{ aspectRatio: string }>`
+    aspect-ratio: ${({ aspectRatio }) => aspectRatio};
     cursor: grab;
 `;
+
+export const Container = ({ children, ...props }: { children: React.ReactNode }) => {
+    const { width } = useWindowDimensions();
+    const aspectRatio = width > 600 ? width > 2200 ? wideRatio : defaultRatio : mobileRatio;
+
+    return (
+        <ContainerBase aspectRatio={aspectRatio} {...props}>
+            {children}
+        </ContainerBase>
+    );
+};
 
 export const FlatContainer = styled.FlatList`
     position: relative;
@@ -42,6 +41,7 @@ export const FlexRow = styled.View`
     gap: 10px;
     display: flex;
     flex-direction: row;
+    align-items: center;
 `;
 
 export const IndicatorItem = styled.TouchableOpacity<{selectedState: boolean}>`
@@ -57,11 +57,19 @@ export const ImageContainer = styled.View<{windowWidth: number}>`
     height: 100%;
 `;
 
-export const ImageItem = styled.Image`
+export const ImageItemBase = styled.Image<{ size: string }>`
     width: 100%;
-    aspect-ratio: 16/4;
+    aspect-ratio: ${({ size }) => size};
     cursor: pointer;
 `;
+
+export const ImageItem: FC<ImageProps> = ({...props}) => {
+    const {width} = useWindowDimensions()
+    const size = width > 600 ? width > 2200 ? wideRatio : defaultRatio : mobileRatio;
+    return <ImageItemBase {...props} size={size} />
+}
+
+
 
 export const Filter = styled.View`
     position: absolute;

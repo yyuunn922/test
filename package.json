@@ -9,7 +9,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "web-build": "expo export -c && AWS_PROFILE=yyuunn922 aws s3 sync dist/ s3://choiyunseok-mono-project/test --delete && AWS_PROFILE=yyuunn922 aws cloudfront create-invalidation --distribution-id E20VT8GE549I77 --paths '/*' && exit"
   },
   "jest": {
     "preset": "jest-expo"

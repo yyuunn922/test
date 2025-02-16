@@ -1,11 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Dimensions, FlatList, TouchableOpacity} from 'react-native';
+import {Dimensions, FlatList, TouchableOpacity, useWindowDimensions} from 'react-native';
 import {AbsoluteView} from '@/systems/components/absoluteView';
 import {AntDesign} from '@expo/vector-icons';
 import {LineCenter} from '@/systems/components/lineCenter';
 import {
-    TitleText,
-    SmallText,
     Container,
     FlatContainer,
     Layer,
@@ -20,6 +18,8 @@ import {
 } from '@/app/(banner)/_bannerEvent';
 import {CenterView} from "@/systems/components/centerView";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
+import {SmallText} from "@/systems/components/common/text/textStyle";
+import {TitleText} from "@/systems/components/common/text/text";
 
 // 기본 데이터를 정의합니다.
 const items: React.ReactNode[] = [
@@ -31,7 +31,7 @@ const items: React.ReactNode[] = [
 
 // 컴포넌트 시작
 export const Banner = () => {
-    const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
+    const {width: windowWidth} = useWindowDimensions();
     const flatListRef = useRef<FlatList>(null);
     const [isDrag, setIsDrag] = useState(false);
     const scrollOffsetX = useRef(0);
@@ -61,24 +61,15 @@ export const Banner = () => {
         }
     }, [rollingState]);
 
-    // 렌더링시 초기화
     useEffect(() => {
-        // 롤링 자동 시작
-         setRollingState(true)
+        setRollingState(false);
+        setInterval(() => {
+            setRollingState(true);
+        }, 300)
+    }, [windowWidth]);
 
-        // 화면 변경 감지
-        const catchResize = Dimensions.addEventListener("change", () => {
-            setRollingState(false);
-            setWindowWidth(Dimensions.get('window').width)
-            setInterval(() => {
-                setRollingState(true);
-            }, 300)
-        });
-
-        return () => {
-            catchResize.remove();
-        }
-    }, []);
+    // 렌더링시 초기화
+    useEffect(() => setRollingState(true), []);
 
     return (
         <>

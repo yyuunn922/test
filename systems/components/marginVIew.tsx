@@ -1,7 +1,6 @@
 import {FC} from "react";
-import {View, ViewProps} from "react-native";
+import {ViewProps} from "react-native";
 import styled from "@emotion/native";
-import values from "ajv/lib/vocabularies/jtd/values";
 
 const Container = styled.View<{value: number}> `
     margin-top: ${({ value }) => `${value}px`};
