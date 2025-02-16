@@ -22,12 +22,7 @@ import {SmallText} from "@/systems/components/common/text/textStyle";
 import {TitleText} from "@/systems/components/common/text/text";
 
 // 기본 데이터를 정의합니다.
-const items: React.ReactNode[] = [
-    'https://picsum.photos/1200/600?random=1',
-    'https://picsum.photos/1200/600?random=2',
-    'https://picsum.photos/1200/600?random=3',
-    'https://picsum.photos/1200/600?random=4',
-];
+const items: React.ReactNode[] = Array.from({length: 10}, (_, i) => `https://picsum.photos/1200/600?random=${i + 1}`)
 
 // 컴포넌트 시작
 export const Banner = () => {
