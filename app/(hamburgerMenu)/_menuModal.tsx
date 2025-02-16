@@ -1,4 +1,3 @@
-import styled from "@emotion/native";
 import {
     Modal,
     Animated,
@@ -9,29 +8,11 @@ import {
     TouchableOpacity
 } from "react-native";
 import React, {SetStateAction, useEffect, useRef, useState} from "react";
-import {Logo} from "@/app/(hamburgerMenu)/_hamburgerMenu";
 import {LineCenter} from "@/systems/components/lineCenter";
 import {TopView} from "@/systems/components/marginVIew";
 import {AntDesign} from '@expo/vector-icons';
 import {FlexRow} from "@/app/(banner)/_bannerStyles";
-
-
-
-const MenuView = styled.TouchableOpacity`
-    background-color: #00000080;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-`;
-
-const MenuContainer = styled(Animated.View)`
-    position: absolute;
-    left: 0;
-    width: 300px;  /* 너비 조정 */
-    height: 100%;
-    background-color: white;
-`;
-
+import {ItemCategory, ItemContainer, Logo, MenuContainer, MenuView} from "@/app/(hamburgerMenu)/_hamburgerStyle";
 
 export const MenuModal = ({show, setShow}: {show: boolean; setShow: React.Dispatch<SetStateAction<boolean>>}) => {
     const {width} = useWindowDimensions()
@@ -86,18 +67,6 @@ export const MenuModal = ({show, setShow}: {show: boolean; setShow: React.Dispat
     );
 };
 
-const ItemContainer = styled.View `
-    width: 100%;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-bottom: 10px;
-`
-
-const ItemCategory = styled.TouchableOpacity `
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 10px 10px;
-`
 
 const MenuItem = ({title, items}:{title: string, items: string[]}) => {
     const [open, setOpen] = useState(false);

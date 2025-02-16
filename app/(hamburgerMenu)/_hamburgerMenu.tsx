@@ -1,43 +1,12 @@
-import styled from '@emotion/native';
-import {AntDesign, Feather} from '@expo/vector-icons'
-import {Modal, TouchableOpacity, useWindowDimensions} from "react-native";
+import {AntDesign} from '@expo/vector-icons'
+import {TouchableOpacity, useWindowDimensions} from "react-native";
 import React, {useState} from "react";
-import {Text} from 'react-native';
 import {MenuModal} from "@/app/(hamburgerMenu)/_menuModal";
-import slugify from "slugify";
-
-const MaxWidthLayout = styled.View `
-    display: flex;
-    align-items: center;
-`
-
-const Container = styled.View<{width: number}> `
-    width: ${({ width }) => (width === 0 ? '100%' : `${width}px`)};
-    border: 1px solid #ddd;
-    box-shadow: 1px 1px 1px #ddd;
-    padding: 4px 20px;
-    border-radius: 4px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-`
-
-export const Logo = styled.Image `
-    width: 100px;
-    aspect-ratio: 16/9;
-`
-
-const FlexRow = styled.View `
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 20px;
-`
+import {FlexRow, Logo, MaxWidthLayout, Container} from "@/app/(hamburgerMenu)/_hamburgerStyle";
 
 export const HambugerMenu = () => {
     const {width} = useWindowDimensions();
-    const [menuShow, setMenuShow] = useState(true);
+    const [menuShow, setMenuShow] = useState(false);
     return (
         <>
             <MenuModal show={menuShow} setShow={setMenuShow}/>
