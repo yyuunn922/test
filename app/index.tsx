@@ -17,8 +17,6 @@ export default function Index() {
                 <TopView value={10}>
                     <ItemSlider />
                     <ItemSlider direction={false} />
-                    <ItemSlider />
-                    <ItemSlider direction={false} />
                 </TopView>
             </ScrollView>
         </>
