@@ -8,7 +8,7 @@ import {
     ProductImage,
     ScrollContainer,
     Title
-} from "@/app/(itemSlider)/_itemSliderStyle";
+} from "@/app/web/(itemSlider)/_itemSliderStyle";
 
 const lorem = new LoremIpsum();
 

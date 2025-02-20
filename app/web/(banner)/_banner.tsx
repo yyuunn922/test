@@ -9,13 +9,13 @@ import {
     Layer,
     FlexRow,
     IndicatorItem, ImageContainer, Filter, ImageItem,
-} from '@/app/(banner)/_bannerStyles';
+} from '@/app/web/(banner)/_bannerStyles';
 import {
     pointerDownEvent,
     pointerMoveEvent,
     pointerUpEvent,
     indicatorEvent, onscroll,
-} from '@/app/(banner)/_bannerEvent';
+} from '@/app/web/(banner)/_bannerEvent';
 import {CenterView} from "@/systems/components/centerView";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
 import {SmallText} from "@/systems/components/common/text/textStyle";
@@ -25,7 +25,7 @@ import {TitleText} from "@/systems/components/common/text/text";
 const items: React.ReactNode[] = Array.from({length: 10}, (_, i) => `https://picsum.photos/1200/600?random=${i + 1}`)
 
 // 컴포넌트 시작
-export const Banner = () => {
+const Banner = () => {
     const {width: windowWidth} = useWindowDimensions();
     const flatListRef = useRef<FlatList>(null);
     const [isDrag, setIsDrag] = useState(false);
@@ -136,3 +136,5 @@ export const BannerItem = ({url, windowWidth}: {url: string, windowWidth: number
         </ImageContainer>
     );
 };
+
+export default Banner

@@ -1,24 +1,23 @@
-import React from "react";
-import {Banner} from "@/app/(banner)/_banner";
-import {TopView} from "@/systems/components/marginVIew";
-import {HambugerMenu} from "@/app/(hamburgerMenu)/_hamburgerMenu";
-import {ScrollView} from "react-native";
-import {ItemSlider} from "@/app/(itemSlider)/_itemSlider";
-import {Divider} from "@/systems/components/common/divider";
+import {View, Text, TouchableOpacity} from 'react-native';
+import {useRouter} from "expo-router";
 
-export default function Index() {
+export default () => {
+    const router = useRouter();
     return (
-        <>
-            <ScrollView>
-                <Banner />
-                <TopView value={20}>
-                    <HambugerMenu />
-                </TopView>
-                <TopView value={10}>
-                    <ItemSlider />
-                    <ItemSlider direction={false} />
-                </TopView>
-            </ScrollView>
-        </>
-    );
+        <View className={'items-center justify-center flex-1 gap-y-2'}>
+            <Button title={'웹 슬라이드'} event={() => router.push('/web')} />
+            <Button title={'비전 1'} event={() => router.push('/vision/old')} />
+            <Button title={'비전 2'} event={() => router.push('/vision/new')} />
+            <Button title={'onnx'} event={() => router.push('/vision/onnx')} />
+        </View>
+    )
+}
+
+
+const Button = ({title, event} : {title: string, event: () => void}) => {
+    return (
+        <TouchableOpacity onPress={event} className={'border border-gray-300 p-5'}>
+            <Text>{title}</Text>
+        </TouchableOpacity>
+    )
 }

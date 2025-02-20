@@ -11,8 +11,8 @@ import React, {SetStateAction, useEffect, useRef, useState} from "react";
 import {LineCenter} from "@/systems/components/lineCenter";
 import {TopView} from "@/systems/components/marginVIew";
 import {AntDesign} from '@expo/vector-icons';
-import {FlexRow} from "@/app/(banner)/_bannerStyles";
-import {ItemCategory, ItemContainer, Logo, MenuContainer, MenuView} from "@/app/(hamburgerMenu)/_hamburgerStyle";
+import {FlexRow} from "@/app/web/(banner)/_bannerStyles";
+import {ItemCategory, ItemContainer, Logo, MenuContainer, MenuView} from "@/app/web/(hamburgerMenu)/_hamburgerStyle";
 
 export const MenuModal = ({show, setShow}: {show: boolean; setShow: React.Dispatch<SetStateAction<boolean>>}) => {
     const {width} = useWindowDimensions()

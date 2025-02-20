@@ -1,8 +1,8 @@
 import {AntDesign} from '@expo/vector-icons'
 import {TouchableOpacity, useWindowDimensions} from "react-native";
 import React, {useState} from "react";
-import {MenuModal} from "@/app/(hamburgerMenu)/_menuModal";
-import {FlexRow, Logo, MaxWidthLayout, Container} from "@/app/(hamburgerMenu)/_hamburgerStyle";
+import {MenuModal} from "@/app/web/(hamburgerMenu)/_menuModal";
+import {FlexRow, Logo, MaxWidthLayout, Container} from "@/app/web/(hamburgerMenu)/_hamburgerStyle";
 
 export const HambugerMenu = () => {
     const {width} = useWindowDimensions();
